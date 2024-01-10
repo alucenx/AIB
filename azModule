@@ -1,0 +1,11 @@
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+# Check if the Az module is installed
+if ((Get-Module -ListAvailable -Name Az -ErrorAction SilentlyContinue) -eq $null) {
+    # Install the Az module
+    Install-Module -Name Az -Force -AllowClobber -Scope CurrentUser -ErrorAction Stop
+} else {
+    Write-Host "Az module is already installed."
+}
+
+# Import the Az module
+Import-Module Az -ErrorAction Stop
