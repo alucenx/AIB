@@ -1,8 +1,11 @@
 # Install the latest version of Azure PowerShell module
 Install-Module -Name Az -AllowClobber -Force -Scope AllUsers -Verbose
+Start-Sleep -Seconds 90
 
 # Import the Az module
 Import-Module Az -Force
+
+Start-Sleep -Seconds 25
 
 # Use the managed identity details obtained earlier
 $managedIdentity = Get-AzUserAssignedIdentity -Name "AIBManageID" -ResourceGroupName "ImageBuilderAN-RG"
@@ -15,6 +18,7 @@ $managedIdentityCredential = [PSCredential]::new($managedIdentity.ClientId, (Con
 
 # Connect to Azure using the managed identity credentials
 Connect-AzAccount -Credential $managedIdentityCredential -Tenant $managedIdentity.TenantId -ServicePrincipal
+
 
 $storageAccountName = "imagebuilderan"
 $resourceGroupName = "ImageBuilderAN-RG"
@@ -31,8 +35,6 @@ $storageAccountKey = $storageAccountKeys[0].Value
 $cmdkeyCommand = "cmdkey.exe /add:$fileShareName.file.core.windows.net /user:$storageAccountName /pass:$storageAccountKey"
 Invoke-Expression -Command $cmdkeyCommand
 
-# Now, you can access the mapped file share using the specified drive letter (e.g., Z:)
-# You can change the drive letter based on your preference
 $driveLetter = "Z:"
 $netUseCommand = "net use $driveLetter \\$storageAccountName.file.core.windows.net\$fileShareName /persistent:yes"
 Invoke-Expression -Command $netUseCommand
