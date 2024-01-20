@@ -1,15 +1,7 @@
-﻿$storageAccountName = "imagebuilderan"
-$fileShareName = "aib-fs"
+$installZip = 'software.zip'
 $destinationPath = 'C:\temp'
 $downloadPath = Join-Path $destinationPath $installZip
-$installZip = 'software.zip'
 $filePath = $installZip
-
-# Map the network drive using the file share key
-$cmdkeyCommand = "cmdkey.exe /add:$fileShareName /user:$storageAccountName /pass:$storageAccountKey"
-Invoke-Expression -Command $cmdkeyCommand
-New-PSDrive -Name Z -PSProvider FileSystem -Root "\\$storageAccountName.file.core.windows.net\$fileShareName" -Persist -Credential $(New-Object System.Management.Automation.PSCredential -ArgumentList "$storageAccountName\$fileShareName", (ConvertTo-SecureString -String $storageAccountKey -AsPlainText -Force))
-
 
 # Prepare for installation and configuration
 
