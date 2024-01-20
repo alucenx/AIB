@@ -12,7 +12,7 @@ if (-not (Test-Path $destinationPath -PathType Container)) {
 $downloadPath = Join-Path $destinationPath $installZip
 
 try {
-    Get-Item -Path Z:\$filePath -ErrorAction Stop | Copy-Item -Destination $downloadPath -Force
+    Get-Item -Path H:\$filePath -ErrorAction Stop | Copy-Item -Destination $downloadPath -Force
 } catch {
     throw "Failed to download $installZip $_"
 }
